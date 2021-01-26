@@ -22,7 +22,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-// criar a estrutura de pastas
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,9 +36,9 @@
 </head>
 <body>
     <div>
-        <form method="post" style="margin: 60px;" class="frmGerar" id="frmGerar">
-            <h2>Informações de conexão</h2><br><br>
-            <div class="form-row">
+        <form method="post" style="margin: 100px;" class="frmGerar" id="frmGerar">
+            <h2>Informações da conexão</h2>
+            <hr><div class="form-row">
                 <div class="form-group col-md-3">
                     <label for="serverName">Nome do servidor</label>
                     <input type="text" class="form-control" id="serverName" placeholder="Nome do servidor" name="data[gerar_codigo][nome_servidor]" required>
@@ -57,6 +56,14 @@
                     <input type="text" class="form-control" id="databaseName" placeholder="Nome do banco de dados" name="data[gerar_codigo][nome_banco]" required>
                 </div>
             </div><hr>
+            <h2>Informações da tabela</h2>
+            <hr><div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="tableName">Nome da tabela</label>
+                    <input type="text" class="form-control" id="tableName" placeholder="Nome da tabela" name="data[gerar_codigo][nome_tabela]" required>
+                </div>
+            </div><hr>
+            <!-- VERIFICAR POSTERIORMENTE SE É ÚTIL IMPLEMENTAR
             <h2>Informações da estrutura do código gerado</h2><br><br>
             <div class="form-group">
                 <div class="form-check">
@@ -70,6 +77,7 @@
                 </label>
                 </div>
             </div><hr>
+            -->
             <button type="submit" class="btn btn-primary">Gerar</button>
         </form>
     </div>
