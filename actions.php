@@ -23,6 +23,7 @@
 // SOFTWARE.
 
 header('Content-Type: text/html; charset=utf-8');
+require __DIR__ . '\Connection.php';
 
 // Converts the string received into variables
 if (isset($_POST['param']))
@@ -30,14 +31,34 @@ if (isset($_POST['param']))
 
 switch ($_REQUEST['acao']) {
     case 'frmGerar':
+        // Connects to database
+        $connections_info = $post['data']['gerar_codigo'];
+
+        $connection = new Connection(
+            $connections_info['nome_servidor'],
+            $connections_info['usuario_servidor'],
+            $connections_info['senha_servidor'],
+            $connections_info['nome_banco']
+        );
         
+        try {
+            $connection->connect();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+
         // Creates the directory with full permission
-        mkdir(__DIR__ . '/files/model', 0777, true);
+        mkdir(__DIR__ . '/files/model', 0777, true); // TRATAR SE A PASTA JÁ EXISTIR
         mkdir(__DIR__ . '/files/controller', 0777, true);
         mkdir(__DIR__ . '/files/view/' . $post['data']['gerar_codigo']['nome_banco'], 0777, true);
 
+        echo '<pre>';
+        print_r($post);
+        echo '</pre>';
+
         /* TO DO */
-        // conectar com o banco para trazer os atributos
+        // verificar se a tabela existe
+        // buscar os atributos da tabela
         // criar o controller <- create, delete, read e update
         // criar a classe <- model com os atributos e funções específicas
         // criar a tela de cadastrar
@@ -46,6 +67,3 @@ switch ($_REQUEST['acao']) {
     break;
 }
 
-// echo '<pre>';
-// print_r($post);
-// echo '</pre>';
