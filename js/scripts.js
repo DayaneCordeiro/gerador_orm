@@ -11,6 +11,7 @@ $(document).ready(function() {
             url: 'actions.php',
             data : param
         }).done(function(){
+            // mostrar mensagem de sucesso depois de concluido
             console.log('enviado com sucesso');
         });
     });
