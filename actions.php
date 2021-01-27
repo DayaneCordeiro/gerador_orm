@@ -49,9 +49,12 @@ switch ($_REQUEST['acao']) {
         }
 
         // Creates the directory with full permission
-        mkdir(__DIR__ . '/files/model', 0777, true); // TRATAR SE A PASTA JÁ EXISTIR
-        mkdir(__DIR__ . '/files/controller', 0777, true);
-        mkdir(__DIR__ . '/files/view/' . $post['data']['gerar_codigo']['nome_banco'], 0777, true);
+        if (!is_dir(__DIR__ . '/files/model'))
+            mkdir(__DIR__ . '/files/model', 0777, true);
+        if (!is_dir(__DIR__ . '/files/controller'))
+            mkdir(__DIR__ . '/files/controller', 0777, true);
+        if (!is_dir(__DIR__ . '/files/view/' . $post['data']['gerar_codigo']['nome_banco']))
+            mkdir(__DIR__ . '/files/view/' . $post['data']['gerar_codigo']['nome_banco'], 0777, true);
 
         echo '<pre>';
         print_r($post);
