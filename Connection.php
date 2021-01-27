@@ -67,6 +67,21 @@ class Connection {
         return ($sucess) ? 200 : throw new Exception("Datatable not found.");
     }
 
+    /// @brief Search All Table's Columns
+    public function searchColumns($table_name) {
+        $columns = array();
+        $i       = 0;
+        $result  = $this->conn->query("SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '$table_name';");
+        
+        while($column = $result->fetch_assoc()) {
+            $columns[$i]['column_name'] = $column['COLUMN_NAME'];
+            $columns[$i]['column_type'] = $column['DATA_TYPE'];
+            $i++;
+        }
+
+        return $columns;      
+    }
+
     // Setters
     public function setServername($servername) {
         $this->servername = $servername;

@@ -48,7 +48,7 @@ switch ($_REQUEST['acao']) {
             exit;
         }
 
-        // Creates the directory with full permission
+        // Creates the directory with full permission if it doesn't exists
         if (!is_dir(__DIR__ . '/files/model'))
             mkdir(__DIR__ . '/files/model', 0777, true);
         if (!is_dir(__DIR__ . '/files/controller'))
@@ -56,11 +56,11 @@ switch ($_REQUEST['acao']) {
         if (!is_dir(__DIR__ . '/files/view/' . $post['data']['gerar_codigo']['nome_banco']))
             mkdir(__DIR__ . '/files/view/' . $post['data']['gerar_codigo']['nome_banco'], 0777, true);
 
-        echo '<pre>';
-        print_r($post);
-        echo '</pre>';
+        // echo '<pre>';
+        // print_r($post);
+        // echo '</pre>';
 
-        // verificar se a tabela existe
+        // Checks whether the chosen table exists
         try {
             $connection->findyDatatable($connections_info['nome_tabela']);
         } catch (Exception $e) {
@@ -68,8 +68,11 @@ switch ($_REQUEST['acao']) {
             exit;
         }
 
+        // Searchs all table's columns
+        $columns = array();
+        $columns = $connection->searchColumns($connections_info['nome_tabela']);
+
         /* TO DO */
-        // buscar os atributos da tabela
         // criar o controller <- create, delete, read e update
         // criar a classe <- model com os atributos e funções específicas
         // criar a tela de cadastrar
