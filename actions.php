@@ -45,6 +45,7 @@ switch ($_REQUEST['acao']) {
             $connection->connect();
         } catch (Exception $e) {
             echo $e->getMessage();
+            exit;
         }
 
         // Creates the directory with full permission
@@ -56,8 +57,15 @@ switch ($_REQUEST['acao']) {
         print_r($post);
         echo '</pre>';
 
-        /* TO DO */
         // verificar se a tabela existe
+        try {
+            $connection->findyDatatable($connections_info['nome_tabela']);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            exit;
+        }
+
+        /* TO DO */
         // buscar os atributos da tabela
         // criar o controller <- create, delete, read e update
         // criar a classe <- model com os atributos e funções específicas

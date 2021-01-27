@@ -28,6 +28,8 @@ class Connection {
     public $username;
     public $password;
     public $database;
+    public $conn;
+    public $db;
 
     // Constructor
     public function __construct($servername, $username, $password, $database) {
@@ -38,20 +40,31 @@ class Connection {
     }
 
     // Methods
-    public function connect() {
-        $conn = mysqli_connect($this->servername, $this->username, $this->password, $this->database);
 
-        if (!$conn) {
+    /// @brief Connects to the database
+    public function connect() {
+        $this->conn = mysqli_connect($this->servername, $this->username, $this->password, $this->database);
+
+        if (!$this->conn) {
             throw new Exception("Unable to connect to MySQL. " . mysqli_connect_error());
             exit;
         } else {
-            $db = mysqli_select_db($conn, $this->database);
+            $this->db = mysqli_select_db($this->conn, $this->database);
 
-            if (!$db)
+            if (!$this->db)
                 throw new Exception("Unable to connect to " . $this->database);
 
             return 200;
         }
+    }
+
+    /// @ brief Veficates if the datatable exists
+    public function findyDatatable($table_name) {
+
+        $result = $this->conn->query("SHOW TABLES LIKE '$table_name'");
+        $sucess = $result && $result->num_rows > 0;
+
+        return ($sucess) ? 200 : throw new Exception("Datatable not found.");
     }
 
     // Setters
