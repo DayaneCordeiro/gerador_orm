@@ -56,10 +56,6 @@ switch ($_REQUEST['acao']) {
         if (!is_dir(__DIR__ . '/files/view/' . $post['data']['gerar_codigo']['nome_banco']))
             mkdir(__DIR__ . '/files/view/' . $post['data']['gerar_codigo']['nome_banco'], 0777, true);
 
-        // echo '<pre>';
-        // print_r($post);
-        // echo '</pre>';
-
         // Checks whether the chosen table exists
         try {
             $connection->findyDatatable($connections_info['nome_tabela']);
@@ -71,6 +67,10 @@ switch ($_REQUEST['acao']) {
         // Searchs all table's columns
         $columns = array();
         $columns = $connection->searchColumns($connections_info['nome_tabela']);
+
+        // echo '<pre>';
+        // print_r($columns);
+        // echo '</pre>';
 
         /* TO DO */
         // criar o controller <- create, delete, read e update
