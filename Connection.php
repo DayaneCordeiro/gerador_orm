@@ -72,10 +72,12 @@ class Connection {
         $columns = array();
         $i       = 0;
         $result  = $this->conn->query("SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '$table_name';");
-        
+
         while($column = $result->fetch_assoc()) {
+
             $columns[$i]['column_name'] = $column['COLUMN_NAME'];
-            $columns[$i]['column_type'] = $column['DATA_TYPE'];
+            $columns[$i]['data_type'] = $column['DATA_TYPE'];
+            $columns[$i]['column_type'] = $column['COLUMN_TYPE'];
             $i++;
         }
 
