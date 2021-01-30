@@ -24,6 +24,7 @@
 
 header('Content-Type: text/html; charset=utf-8');
 require __DIR__ . '\Connection.php';
+require __DIR__ . '\gerador_de_controller.php';
 
 // Converts the string received into variables
 if (isset($_POST['param']))
@@ -68,10 +69,22 @@ switch ($_REQUEST['acao']) {
         $columns = array();
         $columns = $connection->searchColumns($connections_info['nome_tabela']);
 
-        // echo '<pre>';
-        // print_r($columns);
-        // echo '</pre>';
+        // Treating data to send to functions
+        $data['class_name'] = $post['data']['gerar_codigo']['nome_tabela'];
+        $data['columns']    = array();
 
+        foreach ($columns as $column) {
+            if ($column['column_name'] != "id")
+                array_push($data['columns'], $column['column_name']);
+        }
+
+        $controller = new ControllerGenerator();
+        $controller->createController($data);
+
+
+        echo '<pre>';
+        print_r($data);
+        echo '</pre>';
         /* TO DO */
         // criar o controller <- create, delete, read e update
         // criar a classe <- model com os atributos e funções específicas

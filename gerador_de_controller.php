@@ -22,23 +22,63 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+class ControllerGenerator {
+    public function createController($data) {
+        $file_name           = $data['class_name'] . 'Controller.php';
+        $path                = __DIR__ . "\\files\controller\\" . $file_name;
+        $atributes           = "";
+        $constructor         = "";
+        $constructor_content = "";
+        $getters_setters     = "";
+        $create_query        = "";
 
-// PASSOS
-// fazer uma conexão com o banco de dados
-// receber o nome da tabela como parâmetro
-// pegar do proprio banco os campos para criar os atributos da classe
+        // Setting formated data to variables
+        foreach ($data['columns'] as $column) {
+            $atributes .= "        private $" . $column . "\n";
+            $constructor .= "$" . $column . ", ";
+            $constructor_content .= "            $" . "this->set" . ucfirst($column) . "($" . $column . ");\n";
+            $getters_setters .= "        public function get" . ucfirst($column) . "() {\n            return $" . "this->" . $column . ";\n        }\n\n        public function set" . ucfirst($column) . "($" . $column . ") {\n            $" . "this->" . $column . " = $" . $column . ";\n        }\n\n";
+            $create_query .= "'\"' . $" . "this->get" . ucfirst($column) . "() . '\"', ";
+        };
+
+        // Remove the two lasts caracteres from string
+        $constructor  = substr($constructor, 0, -2);
+        $create_query = substr($create_query, 0, -2);
+
+        // echo '<pre>';
+        // print_r($atributes);
+        // echo '</pre>';
 
 
-$nome_tabela_banco = "pessoa";
-$atributo1 = "id";
-$atributo2 = "nome";
-$atributo3 = "idade";
+        $content =
+'<?php
+    class ' . ucfirst($data['class_name']) . ' {
+        // Atributes
+'.$atributes.'
+        // Constructor
+        public function __construct(' . $constructor . ') {
+'.$constructor_content.'
+        }
 
-// cria as pastas
-//mkdir(__DIR__. $nome_tabela_banco, 0777, true);
-
-$data = '
-public static function create($pessoa) {
-    insert into ' . $nome_tabela_banco . '
+        // Getters and Setters
+'.$getters_setters.'
+        // Create Function
+        public function create() {
+            if (mysqli_query($con, "INSERT INTO ' . $data['class_name'] . ' VALUES(DEFAULT, ' . $create_query . ')")) {
+                $last_id = mysqli_insert_id($con);
+                return $last_id;
+            }
+        }
 }
-';
+        ';
+
+        // TO DO
+        // update
+        // delete
+        // read_by_id
+        // read_all
+        
+        // Creates and write on file
+        file_put_contents($path, $content);
+    }
+}
