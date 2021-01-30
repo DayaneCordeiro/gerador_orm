@@ -34,10 +34,10 @@ class ControllerGenerator {
 
         // Setting formated data to variables
         foreach ($data['columns'] as $column) {
-            $atributes .= "        private $" . $column . "\n";
+            $atributes .= "    private $" . $column . "\n";
             $constructor .= "$" . $column . ", ";
-            $constructor_content .= "            $" . "this->set" . ucfirst($column) . "($" . $column . ");\n";
-            $getters_setters .= "        public function get" . ucfirst($column) . "() {\n            return $" . "this->" . $column . ";\n        }\n\n        public function set" . ucfirst($column) . "($" . $column . ") {\n            $" . "this->" . $column . " = $" . $column . ";\n        }\n\n";
+            $constructor_content .= "         $" . "this->set" . ucfirst($column) . "($" . $column . ");\n";
+            $getters_setters .= "    public function get" . ucfirst($column) . "() {\n        return $" . "this->" . $column . ";\n    }\n\n    public function set" . ucfirst($column) . "($" . $column . ") {\n        $" . "this->" . $column . " = $" . $column . ";\n    }\n\n";
             $create_query .= "'\"' . $" . "this->get" . ucfirst($column) . "() . '\"', ";
         };
 
@@ -52,23 +52,23 @@ class ControllerGenerator {
 
         $content =
 '<?php
-    class ' . ucfirst($data['class_name']) . ' {
-        // Atributes
+class ' . ucfirst($data['class_name']) . ' {
+    // Atributes
 '.$atributes.'
-        // Constructor
-        public function __construct(' . $constructor . ') {
+    // Constructor
+    public function __construct(' . $constructor . ') {
 '.$constructor_content.'
-        }
+    }
 
-        // Getters and Setters
+    // Getters and Setters
 '.$getters_setters.'
-        // Create Function
-        public function create() {
-            if (mysqli_query($con, "INSERT INTO ' . $data['class_name'] . ' VALUES(DEFAULT, ' . $create_query . ')")) {
-                $last_id = mysqli_insert_id($con);
-                return $last_id;
-            }
+    // Create Function
+    public function create() {
+        if (mysqli_query($con, "INSERT INTO ' . $data['class_name'] . ' VALUES(DEFAULT, ' . $create_query . ')")) {
+            $last_id = mysqli_insert_id($con);
+            return $last_id;
         }
+    }
 }
         ';
 
