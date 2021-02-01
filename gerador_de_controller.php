@@ -64,13 +64,49 @@ class ' . ucfirst($data['class_name']) . ' {
 '.$getters_setters.'
     // Create Function
     public function create() {
-        if (mysqli_query($con, "INSERT INTO ' . $data['class_name'] . ' VALUES(DEFAULT, ' . $create_query . ')")) {
-            $last_id = mysqli_insert_id($con);
+        if (mysqli_query($conn, "INSERT INTO ' . $data['class_name'] . ' VALUES(DEFAULT, ' . $create_query . ')")) {
+            $last_id = mysqli_insert_id($conn);
             return $last_id;
         }
     }
+
+    // Read Function
+    public function read($parameters = false) {
+        // Verify if there\'s parameters to include on query
+        $select     = (!empty($parameters[\'select\'])) ? $parameters[\'select\'] : \'*\';
+        $joins      = (!empty($parameters[\'joins\'])) ? $parameters[\'joins\'] : null;
+        $conditions = (!empty($parameters[\'conditions\'])) ? $parameters[\'conditions\'] : null;
+        $group      = (!empty($parameters[\'group\'])) ? $parameters[\'group\'] : null;
+        $order      = (!empty($parameters[\'order\'])) ? $parameters[\'order\'] : null;
+        
+        $sql   = "SELECT".$select."FROM ' . $data['class_name'] . ' ". $joins . $conditions . $group . $order;
+        $query = $conn->query($sql);
+		$data  = array();
+        $i     = 0;
+        
+		while ($row = mysqli_fetch_assoc($query)) {
+		        $data[$i] = $row;
+		        $i++;
+		    }
+		 	return $data;
+		}
+
+    }
 }
         ';
+
+        // public static function read($parametros = false) {
+		
+		// 	$query = $con->query($sql);
+		// 	$dados = array();
+		// 	$i = 0;
+		// 	while ($row = mysqli_fetch_assoc($query)) {
+		//         $dados[$i] = $row;
+		//         $i++;
+		//     }
+		//     mysqli_close($con);
+		// 	return $dados;
+		// }
 
         // TO DO
         // update

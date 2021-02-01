@@ -41,10 +41,33 @@ class Pessoa {
 
     // Create Function
     public function create() {
-        if (mysqli_query($con, "INSERT INTO pessoa VALUES(DEFAULT, '"' . $this->getNome() . '"', '"' . $this->getIdade() . '"', '"' . $this->getSituacao() . '"')")) {
-            $last_id = mysqli_insert_id($con);
+        if (mysqli_query($conn, "INSERT INTO pessoa VALUES(DEFAULT, '"' . $this->getNome() . '"', '"' . $this->getIdade() . '"', '"' . $this->getSituacao() . '"')")) {
+            $last_id = mysqli_insert_id($conn);
             return $last_id;
         }
+    }
+
+    // Read Function
+    public function read($parameters = false) {
+        // Verify if there's parameters to include on query
+        $select     = (!empty($parameters['select'])) ? $parameters['select'] : '*';
+        $joins      = (!empty($parameters['joins'])) ? $parameters['joins'] : null;
+        $conditions = (!empty($parameters['conditions'])) ? $parameters['conditions'] : null;
+        $group      = (!empty($parameters['group'])) ? $parameters['group'] : null;
+        $order      = (!empty($parameters['order'])) ? $parameters['order'] : null;
+        
+        $sql   = "SELECT".$select."FROM pessoa ". $joins . $conditions . $group . $order;
+        $query = $conn->query($sql);
+		$data  = array();
+        $i     = 0;
+        
+		while ($row = mysqli_fetch_assoc($query)) {
+		        $data[$i] = $row;
+		        $i++;
+		    }
+		 	return $data;
+		}
+
     }
 }
         
