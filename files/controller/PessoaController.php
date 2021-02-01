@@ -67,7 +67,11 @@ class Pessoa {
 		    }
 		 	return $data;
 		}
+    }
 
+    // Updates Function
+    public static function update($parameters) {			
+        mysqli_query($conn, "UPDATE pessoa SET " . $parameters['data'] . " WHERE id = '" . $parameters['id'] . "'");
     }
 }
         

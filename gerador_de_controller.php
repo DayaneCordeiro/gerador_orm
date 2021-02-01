@@ -90,29 +90,18 @@ class ' . ucfirst($data['class_name']) . ' {
 		    }
 		 	return $data;
 		}
+    }
 
+    // Updates Function
+    public static function update($parameters) {			
+        mysqli_query($conn, "UPDATE ' . $data['class_name'] . ' SET " . $parameters[\'data\'] . " WHERE id = \'" . $parameters[\'id\'] . "\'");
     }
 }
         ';
 
-        // public static function read($parametros = false) {
-		
-		// 	$query = $con->query($sql);
-		// 	$dados = array();
-		// 	$i = 0;
-		// 	while ($row = mysqli_fetch_assoc($query)) {
-		//         $dados[$i] = $row;
-		//         $i++;
-		//     }
-		//     mysqli_close($con);
-		// 	return $dados;
-		// }
-
         // TO DO
         // update
         // delete
-        // read_by_id
-        // read_all
         
         // Creates and write on file
         file_put_contents($path, $content);
