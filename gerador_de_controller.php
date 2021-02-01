@@ -93,8 +93,13 @@ class ' . ucfirst($data['class_name']) . ' {
     }
 
     // Updates Function
-    public static function update($parameters) {			
+    public function update($parameters) {			
         mysqli_query($conn, "UPDATE ' . $data['class_name'] . ' SET " . $parameters[\'data\'] . " WHERE id = \'" . $parameters[\'id\'] . "\'");
+    }
+
+    // Delete Function
+    public function delete($id) {		
+        mysqli_query($conn, "DELETE FROM ' . $data['class_name'] . ' WHERE id = " . $id . "");
     }
 }
         ';

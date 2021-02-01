@@ -70,8 +70,13 @@ class Pessoa {
     }
 
     // Updates Function
-    public static function update($parameters) {			
+    public function update($parameters) {			
         mysqli_query($conn, "UPDATE pessoa SET " . $parameters['data'] . " WHERE id = '" . $parameters['id'] . "'");
+    }
+
+    // Delete Function
+    public function delete($id) {		
+        mysqli_query($conn, "DELETE FROM pessoa WHERE id = " . $id . "");
     }
 }
         
