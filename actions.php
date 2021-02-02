@@ -25,6 +25,7 @@
 header('Content-Type: text/html; charset=utf-8');
 require __DIR__ . '\Connection.php';
 require __DIR__ . '\gerador_de_controller.php';
+require __DIR__ . '\gerador_de_classes.php';
 
 // Converts the string received into variables
 if (isset($_POST['param']))
@@ -80,6 +81,9 @@ switch ($_REQUEST['acao']) {
 
         $controller = new ControllerGenerator();
         $controller->createController($data);
+
+        $class = new ClassGenerator();
+        $class->createClass($data);
 
 
         echo '<pre>';
