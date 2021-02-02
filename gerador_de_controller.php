@@ -102,7 +102,7 @@ class ' . ucfirst($data['class_name']) . ' {
         mysqli_query($conn, "DELETE FROM ' . $data['class_name'] . ' WHERE id = " . $id . "");
     }
 }
-        ';
+';
 
         // TO DO
         // update

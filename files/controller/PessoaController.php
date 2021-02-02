@@ -79,4 +79,3 @@ class Pessoa {
         mysqli_query($conn, "DELETE FROM pessoa WHERE id = " . $id . "");
     }
 }
-        
