@@ -32,28 +32,6 @@ class ClassGenerator {
     public function createClass($data) {
         $file_name           = $data['class_name'] . 'Class.php';
         $path                = __DIR__ . "\\files\model\\" . $file_name;
-        // $atributes           = "";
-        // $constructor         = "";
-        // $constructor_content = "";
-        // $getters_setters     = "";
-        // $create_query        = "";
-
-        // Setting formated data to variables
-        // foreach ($data['columns'] as $column) {
-        //     $atributes .= "    private $" . $column . "\n";
-        //     $constructor .= "$" . $column . ", ";
-        //     $constructor_content .= "         $" . "this->set" . ucfirst($column) . "($" . $column . ");\n";
-        //     $getters_setters .= "    public function get" . ucfirst($column) . "() {\n        return $" . "this->" . $column . ";\n    }\n\n    public function set" . ucfirst($column) . "($" . $column . ") {\n        $" . "this->" . $column . " = $" . $column . ";\n    }\n\n";
-        //     $create_query .= "'\"' . $" . "this->get" . ucfirst($column) . "() . '\"', ";
-        // };
-
-        // Remove the two lasts caracteres from string
-        // $constructor  = substr($constructor, 0, -2);
-        // $create_query = substr($create_query, 0, -2);
-
-        // echo '<pre>';
-        // print_r($atributes);
-        // echo '</pre>';
 
         $content =
 '<?php
