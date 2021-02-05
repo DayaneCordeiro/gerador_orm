@@ -24,11 +24,11 @@
 
 Class ConfigGenerator {
     public function createConfig($data) {
-        $path                = __DIR__ . "\\files\\config.php" . $file_name;
+        $path                = __DIR__ . "\\files\\config.php";
 
         $content =
 '<?php
-$servername = "' . $data['servename'] . '";
+$servername = "' . $data['servername'] . '";
 $username = "' . $data['username'] . '";
 $password = "' . $data['password'] . '";
 $database = "' . $data['class_name'] . '";
