@@ -26,6 +26,7 @@ header('Content-Type: text/html; charset=utf-8');
 require __DIR__ . '\Connection.php';
 require __DIR__ . '\gerador_de_controller.php';
 require __DIR__ . '\gerador_de_classes.php';
+require __DIR__ . '\gerador_de_config.php';
 
 // Converts the string received into variables
 if (isset($_POST['param']))
@@ -73,6 +74,9 @@ switch ($_REQUEST['acao']) {
         // Treating data to send to functions
         $data['class_name'] = $post['data']['gerar_codigo']['nome_tabela'];
         $data['columns']    = array();
+        $data['servername'] = $post['data']['gerar_codigo']['nome_servidor'];
+        $data['username']   = $post['data']['gerar_codigo']['usuario_servidor'];
+        $data['password']   = $post['data']['gerar_codigo']['senha_servidor'];
 
         foreach ($columns as $column) {
             if ($column['column_name'] != "id")
@@ -85,12 +89,14 @@ switch ($_REQUEST['acao']) {
         $class = new ClassGenerator();
         $class->createClass($data);
 
+        $config = new ConfigGenerator();
+        $config->createConfig($data);
 
         echo '<pre>';
         print_r($data);
         echo '</pre>';
         /* TO DO */
-        // criar o controller <- create, delete, read e update
+        // chamar o gerador de config
         // criar a classe <- model com os atributos e funções específicas
         // criar a tela de cadastrar
         // criar a tela de listar
